@@ -1,17 +1,20 @@
 """¿Mejoran el MCP y las skills las respuestas de Claude Code? Las mismas 10 preguntas en dos modos.
 
-    uv run evaluacion/evaluar.py                     # los dos modos, con sonnet
-    uv run evaluacion/evaluar.py --modos con --solo enaho_cusco --modelo haiku
+    uv run evaluacion/evaluar.py                                    # experimento principal, los dos modos
+    uv run evaluacion/evaluar.py --con-salidas --etiqueta con_salidas_previas    # variante: salidas ya calculadas
+    uv run evaluacion/evaluar.py --modos sin --sin-null --etiqueta sin_null     # experimento: sin la salida «null»
+    uv run evaluacion/evaluar.py --modos con --solo enaho_cusco --etiqueta prueba
 
 Modo A, «sin»: Claude Code sin herramientas (--tools ""), sin MCP (--strict-mcp-config) y en una carpeta temporal
 vacía, fuera del proyecto: no ve el CLAUDE.md, las skills, los datos ni los resultados ya calculados.
 Modo B, «con»: Claude Code con el MCP bcrp, las skills del proyecto y las herramientas mínimas para correrlas
-(PowerShell/Bash para «uv run», Read, Glob, Grep, Skill), en una copia del proyecto SIN la carpeta evaluacion/ (las
-respuestas esperadas), informes/ ni evidencias_ia/.
+(PowerShell/Bash para «uv run», Read, Glob, Grep, Skill). Cada pregunta corre en su propia copia del proyecto SIN
+evaluacion/ (las respuestas esperadas), informes/, evidencias_ia/ ni salidas/, figuras/ o mapas/: solo el código y
+los datos originales del INEI, así que las cifras de la ENAHO tienen que salir de las skills en esa misma sesión.
 
 En los dos modos: el mismo modelo, la misma instrucción, una sesión nueva por pregunta (--no-session-persistence) y
-una respuesta en JSON validada con --json-schema. Escribe evaluacion/resultados.csv, evaluacion/resumen.md y la
-transcripción de cada pregunta en evidencias_ia/evaluacion/.
+una respuesta en JSON validada con --json-schema. Escribe evaluacion/resultados[_etiqueta].csv,
+evaluacion/resumen[_etiqueta].md y la transcripción de cada pregunta en evidencias_ia/evaluacion/<etiqueta>/.
 """
 import argparse
 import json
@@ -25,7 +28,8 @@ from pathlib import Path
 import pandas as pd
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
-from agente.registro import RAIZ, a_markdown, correr_claude, herramientas_shell, permisos_uv  # noqa: E402
+from agente.registro import (RAIZ, a_markdown, correr_claude, herramientas_shell, herramientas_usadas,  # noqa: E402
+                             permisos_uv, resumen_herramientas)
 
 AQUI = Path(__file__).parent
 EVIDENCIAS = RAIZ / "evidencias_ia" / "evaluacion"
@@ -43,15 +47,21 @@ ESQUEMA_MIXTO = {"type": "object", "required": ["valor_bcrp", "valor_enaho", "af
 NO_COPIAR = {".git", ".venv", "evaluacion", "informes", "evidencias_ia", "__pycache__", ".pytest_cache"}
 
 
-def preparar_espacios():
-    """Carpeta vacía para el modo «sin» y copia del proyecto sin respuestas para el modo «con»."""
-    sin = TEMPORAL / "sin_herramientas"
-    con = TEMPORAL / "con_herramientas"
+def preparar_espacios(ids, con_salidas):
+    """Carpeta vacía para el modo «sin» y, para el modo «con», una copia del proyecto por pregunta, sin respuestas.
+
+    Por defecto la copia tampoco lleva salidas/, figuras/ ni mapas/: solo los datos originales del INEI y el código,
+    así que para responder sobre la ENAHO el agente tiene que correr las skills (empezando por limpiando-enaho).
+    Con --con-salidas se copian también las salidas ya calculadas (la primera corrida del experimento).
+    """
     shutil.rmtree(TEMPORAL, ignore_errors=True)
+    sin = TEMPORAL / "sin_herramientas"
     sin.mkdir(parents=True)
-    shutil.copytree(RAIZ, con, ignore=lambda d, nombres: [n for n in nombres if n in NO_COPIAR])
-    if not (con / "salidas" / "hogares_2024.parquet").exists():
-        print("Aviso: no hay salidas/*.parquet; en el modo «con» la skill de limpieza tendrá que correr primero.")
+    excluir = NO_COPIAR | (set() if con_salidas else {"salidas", "figuras", "mapas"})
+    con = {}
+    for id_ in ids:
+        con[id_] = TEMPORAL / f"con_{id_}"
+        shutil.copytree(RAIZ, con[id_], ignore=lambda d, nombres: [n for n in nombres if n in excluir])
     return {"sin": sin, "con": con}
 
 
@@ -88,14 +98,29 @@ def calificar(q, r):
     return ("parcial" if any(partes.values()) else "se equivoca"), detalle
 
 
-def preguntar(q, modo, espacios, modelo):
+def preguntar(q, modo, espacios, modelo, instruccion, carpeta):
     esquema = ESQUEMA_MIXTO if q.tipo == "mixta" else ESQUEMA_SIMPLE
-    prompt = INSTRUCCION + q.pregunta
-    r = correr_claude(prompt, cwd=espacios[modo], modelo=modelo, flags=flags(modo, espacios[modo]),
-                      jsonl=EVIDENCIAS / f"{q.id}__{modo}.jsonl", timeout=900, esquema=esquema)
-    (EVIDENCIAS / f"{q.id}__{modo}.md").write_text(a_markdown(r["eventos"], f"Evaluación · {q.id} · modo {modo}", prompt),
-                                                  encoding="utf-8")
+    prompt = instruccion + q.pregunta
+    espacio = espacios["sin"] if modo == "sin" else espacios["con"][q.id]
+    r = correr_claude(prompt, cwd=espacio, modelo=modelo, flags=flags(modo, espacio),
+                      jsonl=carpeta / f"{q.id}__{modo}.jsonl", timeout=900, esquema=esquema)
+    (carpeta / f"{q.id}__{modo}.md").write_text(a_markdown(r["eventos"], f"Evaluación · {q.id} · modo {modo}", prompt),
+                                               encoding="utf-8")
     return r
+
+
+def leer_transcripcion(ruta, anterior, id_, modo):
+    """Lo mismo que devuelve correr_claude, pero leído de un .jsonl guardado. El tiempo se toma del CSV anterior si
+    existe (se midió de punta a punta); si no, de la duración que informa Claude Code."""
+    eventos = [json.loads(x) for x in ruta.read_text(encoding="utf-8").splitlines() if x.strip()]
+    final = next((e for e in reversed(eventos) if e.get("type") == "result"), {})
+    segundos = round((final.get("duration_ms") or 0) / 1000, 1)
+    if anterior is not None and (id_, modo) in anterior.index:
+        segundos = float(anterior.loc[(id_, modo), "segundos"])
+    return {"eventos": eventos, "resultado": final.get("result", ""), "estructurado": final.get("structured_output"),
+            "segundos": segundos, "turnos": final.get("num_turns"), "costo_usd": final.get("total_cost_usd"),
+            "error": "" if final and not final.get("is_error") else "sin resultado",
+            "herramientas": herramientas_usadas(eventos)}
 
 
 def main():
@@ -104,18 +129,39 @@ def main():
     ap.add_argument("--modelo", default="sonnet")
     ap.add_argument("--paralelo", type=int, default=3)
     ap.add_argument("--solo", nargs="*", help="ids de preguntas, para probar")
+    ap.add_argument("--con-salidas", action="store_true",
+                    help="modo «con» con salidas/ ya calculadas (por defecto, solo datos originales)")
+    ap.add_argument("--sin-null", action="store_true",
+                    help="experimento: quitar de la instrucción la salida «pon null, no estimes»")
+    ap.add_argument("--etiqueta", default="", help="sufijo de resultados_<etiqueta>.csv y carpeta de evidencias")
+    ap.add_argument("--solo-resumen", action="store_true", help="rehacer el resumen desde el CSV, sin preguntar")
+    ap.add_argument("--desde-transcripciones", action="store_true",
+                    help="rehacer el CSV desde los .jsonl ya guardados, sin volver a llamar a Claude")
     a = ap.parse_args()
+    sufijo = f"_{a.etiqueta}" if a.etiqueta else ""
+    salida = AQUI / f"resultados{sufijo}.csv"
+    if a.solo_resumen:
+        res = pd.read_csv(salida)
+        return resumir(res, res.modelo.iloc[0], salida)
 
     preguntas = pd.read_csv(AQUI / "preguntas.csv", dtype={"afirmacion_esperada": str})
     if a.solo:
         preguntas = preguntas[preguntas.id.isin(a.solo)]
-    EVIDENCIAS.mkdir(parents=True, exist_ok=True)
-    espacios = preparar_espacios()
-    os.environ["UV_PROJECT_ENVIRONMENT"] = str(RAIZ / ".venv")   # la copia usa el mismo entorno de uv
+    carpeta = EVIDENCIAS / (a.etiqueta or "principal")
+    carpeta.mkdir(parents=True, exist_ok=True)
+    instruccion = INSTRUCCION.replace("Si no puedes saber una cifra con certeza, pon null: no estimes. ", "") \
+        if a.sin_null else INSTRUCCION
     casos = [(q, m) for q in preguntas.itertuples() for m in a.modos]
-    print(f"{len(casos)} llamadas a claude -p con {a.modelo}, {a.paralelo} a la vez...")
-    with ThreadPoolExecutor(a.paralelo) as ex:
-        respuestas = list(ex.map(lambda c: preguntar(c[0], c[1], espacios, a.modelo), casos))
+    if a.desde_transcripciones:
+        anterior = pd.read_csv(salida).set_index(["id", "modo"]) if salida.exists() else None
+        respuestas = [leer_transcripcion(carpeta / f"{q.id}__{m}.jsonl", anterior, q.id, m) for q, m in casos]
+    else:
+        espacios = preparar_espacios(list(preguntas.id) if "con" in a.modos else [], a.con_salidas)
+        os.environ["UV_PROJECT_ENVIRONMENT"] = str(RAIZ / ".venv")   # las copias usan el mismo entorno de uv
+        print(f"{len(casos)} llamadas a claude -p con {a.modelo}, {a.paralelo} a la vez...")
+        with ThreadPoolExecutor(a.paralelo) as ex:
+            respuestas = list(ex.map(lambda c: preguntar(c[0], c[1], espacios, a.modelo, instruccion, carpeta),
+                                     casos))
 
     filas = []
     for (q, modo), r in zip(casos, respuestas):
@@ -134,23 +180,28 @@ def main():
             "interpretacion": (est or {}).get("interpretacion", ""), "fuente": (est or {}).get("fuente", ""),
             "herramientas_mcp": ";".join(sorted({u.split("__")[-1] for u in usadas if u.startswith("mcp__")})),
             "skills": ";".join(sorted({u.split(":", 1)[1] for u in usadas if u.startswith("Skill:")})),
+            "scripts_de_skills": ";".join(resumen_herramientas(usadas)["scripts_skills"]),
             "n_llamadas_herramientas": len(usadas), "resultado": resultado, "detalle_mixta": detalle,
             "segundos": r["segundos"], "turnos": r["turnos"], "costo_usd": r["costo_usd"],
-            "error": r["error"], "transcripcion": f"evidencias_ia/evaluacion/{q.id}__{modo}.md"})
+            "error": r["error"], "transcripcion": f"{carpeta.relative_to(RAIZ).as_posix()}/{q.id}__{modo}.md"})
     res = pd.DataFrame(filas)
-    salida = AQUI / ("resultados.csv" if not a.solo else "resultados_prueba.csv")
     res.to_csv(salida, index=False, encoding="utf-8")
+    resumir(res, a.modelo, salida)
 
+
+def resumir(res, modelo, salida):
+    """Tablas de aciertos por modo, por tipo y por pregunta, en evaluacion/resumen.md."""
     tabla = res.groupby("modo").resultado.value_counts().unstack(fill_value=0)
     tabla["segundos_promedio"] = res.groupby("modo").segundos.mean().round(1)
     tabla["turnos_promedio"] = res.groupby("modo").turnos.mean().round(1)
-    por_tipo = res.assign(ok=res.resultado.eq("acierta")).pivot_table(index="tipo", columns="modo", values="ok",
-                                                                       aggfunc="sum")
+    por_tipo = (res.assign(ok=res.resultado.eq("acierta").astype(int)).groupby(["tipo", "modo"]).ok.sum()
+                .unstack(fill_value=0))
     pivote = res.pivot(index="id", columns="modo", values="resultado")
-    texto = ["# Resumen automático de la evaluación", "", f"Modelo: `{a.modelo}`. Archivo: `{salida.name}`.", "",
+    texto = ["# Resumen automático de la evaluación", "", f"Modelo: `{modelo}`. Archivo: `{salida.name}`.", "",
              "## Por modo", "", tabla.to_markdown(), "", "## Aciertos por tipo de pregunta", "", por_tipo.to_markdown(),
              "", "## Resultado por pregunta", "", pivote.to_markdown(), ""]
-    (AQUI / ("resumen.md" if not a.solo else "resumen_prueba.md")).write_text("\n".join(texto), encoding="utf-8")
+    (AQUI / salida.name.replace("resultados", "resumen").replace(".csv", ".md")).write_text("\n".join(texto),
+                                                                                             encoding="utf-8")
     print("\n".join(texto))
 
 
