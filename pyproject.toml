@@ -1,0 +1,24 @@
+[project]
+name = "agente-socioeconomico-peru"
+version = "0.1.0"
+description = "Agente de investigación socioeconómica: MCP del BCRP + Skills de la ENAHO 2024 en Claude Code"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+    "fastmcp>=4,<5",
+    "httpx",
+    "pandas",
+    "pyarrow",
+    "geopandas",
+    "matplotlib",
+]
+
+[dependency-groups]
+dev = [
+    "pytest",
+    "ipykernel",
+]
+
+[tool.pytest.ini_options]
+testpaths = ["mcp"]
+addopts = "-q"

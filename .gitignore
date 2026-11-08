@@ -1,0 +1,15 @@
+.venv/
+__pycache__/
+.pytest_cache/
+.ipynb_checkpoints/
+
+# Datos originales (INEI, GeoJSON, catálogo del BCRP): se vuelven a bajar, ver README
+datos/*
+!datos/LEEME.md
+
+# Microdatos procesados (una fila por persona): se regeneran con limpiando-enaho
+salidas/*.parquet
+
+# Configuración local de Claude Code y copias temporales de la evaluación
+.claude/settings.local.json
+evaluacion/espacio_*/
