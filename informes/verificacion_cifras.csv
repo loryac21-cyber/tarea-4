@@ -1,0 +1,8 @@
+fuente,afirmacion,valor_informe,valor_recalculado,valor_publicado,procedimiento,diferencia,coincide
+ENAHO,Pobreza rural 2024: 39.30 %,39.3,39.3028,39.3,"Recalculado de sumaria-2024.dta (estrato >= 6, factor07 × mieperho); INEI publica 39.3 %",-0.0028,True
+ENAHO,Pobreza urbana 2024: 24.81 %,24.81,24.807,24.8,Recalculado de sumaria-2024.dta (estrato <= 5); INEI publica 24.8 %,0.003,True
+ENAHO,"Cajamarca, la más alta: 45.01 %",45.01,45.0069,45.0,Recalculado de sumaria-2024.dta (ubigeo[:2] == '06'); referencia de la sesión 16: 45.0 %,0.0031,True
+ENAHO,El 72.74 % de las personas pobres vive en el área urbana,72.74,72.7439,,Recalculado: pobres urbanos expandidos / total de pobres expandidos,-0.0039,True
+BCRP,"Inflación de alimentos y bebidas de Lima, promedio 2022: 10.78 %",10.78,10.7757,,"Promedio de los 12 datos de PN09822PM en 2022, pedidos a la API sin el MCP",0.0043,True
+BCRP,Inflación de alimentos y bebidas de Lima a diciembre de 2024: 1.25 %,1.25,1.2481,,"PN09822PM, 2024-12, API del BCRP sin el MCP",0.0019,True
+BCRP,PBI agropecuario: +5.57 % en 2024,5.57,5.5725,,Serie anual oficial PM04968AA (el informe lo calculó con el índice mensual PN01755AM),-0.0025,True
