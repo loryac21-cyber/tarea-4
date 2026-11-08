@@ -1,0 +1,139 @@
+indicador,desagregacion,grupo,valor_pct,poblacion_expandida,personas_pobres_expandidas,n_muestral,metodo,nombre
+pobreza_monetaria,nacional,Perú,27.5795,34482700,9510145,33691,hogares: factor07 × mieperho,Perú
+pobreza_monetaria,area,Rural,39.3028,6595188,2592093,11660,hogares: factor07 × mieperho,Rural
+pobreza_monetaria,area,Urbana,24.807,27887512,6918052,22031,hogares: factor07 × mieperho,Urbana
+pobreza_monetaria,region_natural,Costa,21.0021,8116794,1704699,10321,hogares: factor07 × mieperho,Costa
+pobreza_monetaria,region_natural,Lima Metropolitana,28.2117,11431706,3225079,4090,hogares: factor07 × mieperho,Lima Metropolitana
+pobreza_monetaria,region_natural,Selva,30.0243,4360930,1309337,7211,hogares: factor07 × mieperho,Selva
+pobreza_monetaria,region_natural,Sierra,30.9368,10573269,3271030,12069,hogares: factor07 × mieperho,Sierra
+pobreza_monetaria,departamento,01,25.7488,442355,113901,1243,hogares: factor07 × mieperho,Amazonas
+pobreza_monetaria,departamento,02,22.7746,1212494,276140,1393,hogares: factor07 × mieperho,Áncash
+pobreza_monetaria,departamento,03,23.9587,494188,118401,913,hogares: factor07 × mieperho,Apurímac
+pobreza_monetaria,departamento,04,15.7844,1421684,224404,1506,hogares: factor07 × mieperho,Arequipa
+pobreza_monetaria,departamento,05,32.7633,775447,254062,1160,hogares: factor07 × mieperho,Ayacucho
+pobreza_monetaria,departamento,06,45.0069,1554586,699671,1469,hogares: factor07 × mieperho,Cajamarca
+pobreza_monetaria,departamento,07,33.8599,1142618,386889,1027,hogares: factor07 × mieperho,Callao
+pobreza_monetaria,departamento,08,18.5413,1409467,261334,1230,hogares: factor07 × mieperho,Cusco
+pobreza_monetaria,departamento,09,33.4034,543103,181415,1042,hogares: factor07 × mieperho,Huancavelica
+pobreza_monetaria,departamento,10,38.9626,926653,361048,1244,hogares: factor07 × mieperho,Huánuco
+pobreza_monetaria,departamento,11,6.0142,854203,51373,1500,hogares: factor07 × mieperho,Ica
+pobreza_monetaria,departamento,12,18.4994,1450149,268269,1506,hogares: factor07 × mieperho,Junín
+pobreza_monetaria,departamento,13,30.1903,2080789,628197,1509,hogares: factor07 × mieperho,La Libertad
+pobreza_monetaria,departamento,14,14.0406,1349731,189511,1302,hogares: factor07 × mieperho,Lambayeque
+pobreza_monetaria,departamento,15,27.0689,11279908,3053352,4544,hogares: factor07 × mieperho,Lima
+pobreza_monetaria,departamento,16,42.9726,1129071,485191,1359,hogares: factor07 × mieperho,Loreto
+pobreza_monetaria,departamento,17,11.1478,165992,18504,603,hogares: factor07 × mieperho,Madre de Dios
+pobreza_monetaria,departamento,18,10.9682,198386,21759,963,hogares: factor07 × mieperho,Moquegua
+pobreza_monetaria,departamento,19,38.972,327776,127741,865,hogares: factor07 × mieperho,Pasco
+pobreza_monetaria,departamento,20,31.861,1988570,633578,1611,hogares: factor07 × mieperho,Piura
+pobreza_monetaria,departamento,21,39.9381,1586886,633772,1123,hogares: factor07 × mieperho,Puno
+pobreza_monetaria,departamento,22,22.0215,947446,208642,1347,hogares: factor07 × mieperho,San Martín
+pobreza_monetaria,departamento,23,23.989,380755,91339,1271,hogares: factor07 × mieperho,Tacna
+pobreza_monetaria,departamento,24,26.9012,261959,70470,842,hogares: factor07 × mieperho,Tumbes
+pobreza_monetaria,departamento,25,27.0701,558484,151182,1119,hogares: factor07 × mieperho,Ucayali
+pobreza_monetaria_lima_metropolitana,nacional,Perú,28.2117,11431706,3225079,4090,hogares: factor07 × mieperho,Perú
+pobreza_monetaria,nacional,Perú,27.5287,34147768,9400448,108664,personas: facpob07,Perú
+pobreza_monetaria,area,Rural,39.4417,6486385,2558339,36071,personas: facpob07,Rural
+pobreza_monetaria,area,Urbana,24.7352,27661382,6842108,72593,personas: facpob07,Urbana
+pobreza_monetaria,departamento,01,26.0808,430252,112213,3911,personas: facpob07,Amazonas
+pobreza_monetaria,departamento,02,22.8814,1199410,274442,4576,personas: facpob07,Áncash
+pobreza_monetaria,departamento,03,24.088,474458,114287,2500,personas: facpob07,Apurímac
+pobreza_monetaria,departamento,04,15.7674,1415224,223144,4645,personas: facpob07,Arequipa
+pobreza_monetaria,departamento,05,33.0398,755197,249516,3308,personas: facpob07,Ayacucho
+pobreza_monetaria,departamento,06,44.995,1547849,696454,4468,personas: facpob07,Cajamarca
+pobreza_monetaria,departamento,07,33.7683,1138852,384571,3457,personas: facpob07,Callao
+pobreza_monetaria,departamento,08,18.5393,1380357,255908,3777,personas: facpob07,Cusco
+pobreza_monetaria,departamento,09,33.6082,525028,176452,3244,personas: facpob07,Huancavelica
+pobreza_monetaria,departamento,10,39.4729,910900,359558,3903,personas: facpob07,Huánuco
+pobreza_monetaria,departamento,11,5.9139,855183,50575,4838,personas: facpob07,Ica
+pobreza_monetaria,departamento,12,18.6104,1436462,267331,4658,personas: facpob07,Junín
+pobreza_monetaria,departamento,13,30.0745,2064878,621002,5028,personas: facpob07,La Libertad
+pobreza_monetaria,departamento,14,14.0526,1348585,189511,4405,personas: facpob07,Lambayeque
+pobreza_monetaria,departamento,15,26.8888,11233286,3020492,14823,personas: facpob07,Lima
+pobreza_monetaria,departamento,16,42.6051,1121012,477608,5678,personas: facpob07,Loreto
+pobreza_monetaria,departamento,17,11.1359,165829,18467,2045,personas: facpob07,Madre de Dios
+pobreza_monetaria,departamento,18,10.8781,196788,21407,2511,personas: facpob07,Moquegua
+pobreza_monetaria,departamento,19,39.2818,323033,126893,2746,personas: facpob07,Pasco
+pobreza_monetaria,departamento,20,31.8118,1970217,626762,5876,personas: facpob07,Piura
+pobreza_monetaria,departamento,21,40.4177,1535441,620590,3112,personas: facpob07,Puno
+pobreza_monetaria,departamento,22,21.9938,937167,206119,4619,personas: facpob07,San Martín
+pobreza_monetaria,departamento,23,23.8832,375607,89707,3622,personas: facpob07,Tacna
+pobreza_monetaria,departamento,24,26.5968,261973,69676,2771,personas: facpob07,Tumbes
+pobreza_monetaria,departamento,25,27.1231,544778,147761,4143,personas: facpob07,Ucayali
+pobreza_monetaria,sexo,Hombre,27.3706,16453003,4503293,52587,personas: facpob07,Hombre
+pobreza_monetaria,sexo,Mujer,27.6757,17694764,4897154,56077,personas: facpob07,Mujer
+pobreza_monetaria,grupo_edad,0-14,37.5156,7941994,2979487,26489,personas: facpob07,0-14
+pobreza_monetaria,grupo_edad,15-29,25.97,7512400,1950972,23122,personas: facpob07,15-29
+pobreza_monetaria,grupo_edad,30-44,27.8661,6689119,1863996,20648,personas: facpob07,30-44
+pobreza_monetaria,grupo_edad,45-64,21.1526,7803731,1650694,24735,personas: facpob07,45-64
+pobreza_monetaria,grupo_edad,65 y más,22.7424,4200522,955299,13670,personas: facpob07,65 y más
+pobreza_extrema,nacional,Perú,5.5045,34482700,1898112,33691,hogares: factor07 × mieperho,Perú
+pobreza_extrema,area,Rural,15.5185,6595188,1023472,11660,hogares: factor07 × mieperho,Rural
+pobreza_extrema,area,Urbana,3.1363,27887512,874639,22031,hogares: factor07 × mieperho,Urbana
+pobreza_extrema,region_natural,Costa,1.6149,8116794,131081,10321,hogares: factor07 × mieperho,Costa
+pobreza_extrema,region_natural,Lima Metropolitana,3.2847,11431706,375502,4090,hogares: factor07 × mieperho,Lima Metropolitana
+pobreza_extrema,region_natural,Selva,7.9427,4360930,346377,7211,hogares: factor07 × mieperho,Selva
+pobreza_extrema,region_natural,Sierra,9.8848,10573269,1045151,12069,hogares: factor07 × mieperho,Sierra
+pobreza_extrema,departamento,01,6.012,442355,26594,1243,hogares: factor07 × mieperho,Amazonas
+pobreza_extrema,departamento,02,5.8,1212494,70324,1393,hogares: factor07 × mieperho,Áncash
+pobreza_extrema,departamento,03,5.2372,494188,25881,913,hogares: factor07 × mieperho,Apurímac
+pobreza_extrema,departamento,04,1.6462,1421684,23403,1506,hogares: factor07 × mieperho,Arequipa
+pobreza_extrema,departamento,05,9.086,775447,70457,1160,hogares: factor07 × mieperho,Ayacucho
+pobreza_extrema,departamento,06,19.7154,1554586,306492,1469,hogares: factor07 × mieperho,Cajamarca
+pobreza_extrema,departamento,07,5.0394,1142618,57581,1027,hogares: factor07 × mieperho,Callao
+pobreza_extrema,departamento,08,2.1041,1409467,29656,1230,hogares: factor07 × mieperho,Cusco
+pobreza_extrema,departamento,09,11.1601,543103,60611,1042,hogares: factor07 × mieperho,Huancavelica
+pobreza_extrema,departamento,10,12.1989,926653,113042,1244,hogares: factor07 × mieperho,Huánuco
+pobreza_extrema,departamento,11,0.148,854203,1265,1500,hogares: factor07 × mieperho,Ica
+pobreza_extrema,departamento,12,3.8228,1450149,55437,1506,hogares: factor07 × mieperho,Junín
+pobreza_extrema,departamento,13,6.5638,2080789,136578,1509,hogares: factor07 × mieperho,La Libertad
+pobreza_extrema,departamento,14,0.5011,1349731,6763,1302,hogares: factor07 × mieperho,Lambayeque
+pobreza_extrema,departamento,15,3.1179,11279908,351702,4544,hogares: factor07 × mieperho,Lima
+pobreza_extrema,departamento,16,14.9831,1129071,169170,1359,hogares: factor07 × mieperho,Loreto
+pobreza_extrema,departamento,17,1.5315,165992,2542,603,hogares: factor07 × mieperho,Madre de Dios
+pobreza_extrema,departamento,18,2.3814,198386,4724,963,hogares: factor07 × mieperho,Moquegua
+pobreza_extrema,departamento,19,8.3307,327776,27306,865,hogares: factor07 × mieperho,Pasco
+pobreza_extrema,departamento,20,4.4051,1988570,87598,1611,hogares: factor07 × mieperho,Piura
+pobreza_extrema,departamento,21,12.4946,1586886,198274,1123,hogares: factor07 × mieperho,Puno
+pobreza_extrema,departamento,22,4.3905,947446,41597,1347,hogares: factor07 × mieperho,San Martín
+pobreza_extrema,departamento,23,2.651,380755,10094,1271,hogares: factor07 × mieperho,Tacna
+pobreza_extrema,departamento,24,1.0639,261959,2787,842,hogares: factor07 × mieperho,Tumbes
+pobreza_extrema,departamento,25,3.2644,558484,18231,1119,hogares: factor07 × mieperho,Ucayali
+pobreza_extrema_lima_metropolitana,nacional,Perú,3.2847,11431706,375502,4090,hogares: factor07 × mieperho,Perú
+pobreza_extrema,nacional,Perú,5.4998,34147768,1878051,108664,personas: facpob07,Perú
+pobreza_extrema,area,Rural,15.6007,6486385,1011920,36071,personas: facpob07,Rural
+pobreza_extrema,area,Urbana,3.1312,27661382,866130,72593,personas: facpob07,Urbana
+pobreza_extrema,departamento,01,6.146,430252,26443,3911,personas: facpob07,Amazonas
+pobreza_extrema,departamento,02,5.7564,1199410,69043,4576,personas: facpob07,Áncash
+pobreza_extrema,departamento,03,5.178,474458,24567,2500,personas: facpob07,Apurímac
+pobreza_extrema,departamento,04,1.6197,1415224,22922,4645,personas: facpob07,Arequipa
+pobreza_extrema,departamento,05,9.2424,755197,69798,3308,personas: facpob07,Ayacucho
+pobreza_extrema,departamento,06,19.6227,1547849,303730,4468,personas: facpob07,Cajamarca
+pobreza_extrema,departamento,07,4.9787,1138852,56700,3457,personas: facpob07,Callao
+pobreza_extrema,departamento,08,2.1485,1380357,29656,3777,personas: facpob07,Cusco
+pobreza_extrema,departamento,09,11.2795,525028,59221,3244,personas: facpob07,Huancavelica
+pobreza_extrema,departamento,10,12.4035,910900,112983,3903,personas: facpob07,Huánuco
+pobreza_extrema,departamento,11,0.1479,855183,1265,4838,personas: facpob07,Ica
+pobreza_extrema,departamento,12,3.8103,1436462,54734,4658,personas: facpob07,Junín
+pobreza_extrema,departamento,13,6.5823,2064878,135917,5028,personas: facpob07,La Libertad
+pobreza_extrema,departamento,14,0.5015,1348585,6763,4405,personas: facpob07,Lambayeque
+pobreza_extrema,departamento,15,3.1156,11233286,349979,14823,personas: facpob07,Lima
+pobreza_extrema,departamento,16,15.0119,1121012,168285,5678,personas: facpob07,Loreto
+pobreza_extrema,departamento,17,1.533,165829,2542,2045,personas: facpob07,Madre de Dios
+pobreza_extrema,departamento,18,2.3395,196788,4604,2511,personas: facpob07,Moquegua
+pobreza_extrema,departamento,19,8.2672,323033,26706,2746,personas: facpob07,Pasco
+pobreza_extrema,departamento,20,4.3597,1970217,85895,5876,personas: facpob07,Piura
+pobreza_extrema,departamento,21,12.6301,1535441,193928,3112,personas: facpob07,Puno
+pobreza_extrema,departamento,22,4.4533,937167,41735,4619,personas: facpob07,San Martín
+pobreza_extrema,departamento,23,2.579,375607,9687,3622,personas: facpob07,Tacna
+pobreza_extrema,departamento,24,1.0638,261973,2787,2771,personas: facpob07,Tumbes
+pobreza_extrema,departamento,25,3.3333,544778,18159,4143,personas: facpob07,Ucayali
+pobreza_extrema,sexo,Hombre,5.3715,16453003,883772,52587,personas: facpob07,Hombre
+pobreza_extrema,sexo,Mujer,5.6191,17694764,994279,56077,personas: facpob07,Mujer
+pobreza_extrema,grupo_edad,0-14,8.5914,7941994,682329,26489,personas: facpob07,0-14
+pobreza_extrema,grupo_edad,15-29,4.5034,7512400,338310,23122,personas: facpob07,15-29
+pobreza_extrema,grupo_edad,30-44,5.5891,6689119,373862,20648,personas: facpob07,30-44
+pobreza_extrema,grupo_edad,45-64,3.6064,7803731,281431,24735,personas: facpob07,45-64
+pobreza_extrema,grupo_edad,65 y más,4.8118,4200522,202120,13670,personas: facpob07,65 y más
+distribucion_de_pobres,area,Rural,27.2561,,2592093,11660,hogares: factor07 × mieperho,Rural
+distribucion_de_pobres,area,Urbana,72.7439,,6918052,22031,hogares: factor07 × mieperho,Urbana

@@ -1,0 +1,26 @@
+departamento,nombre_departamento,calculado_pct,referencia_sesion16_pct,diferencia_pp,coincide
+01,Amazonas,25.748804,25.7,0.049,True
+02,Áncash,22.774563,22.8,-0.025,True
+03,Apurímac,23.958723,24.0,-0.041,True
+04,Arequipa,15.78437,15.8,-0.016,True
+05,Ayacucho,32.763275,32.8,-0.037,True
+06,Cajamarca,45.006897,45.0,0.007,True
+07,Callao,33.85989,33.9,-0.04,True
+08,Cusco,18.541332,18.5,0.041,True
+09,Huancavelica,33.403362,33.4,0.003,True
+10,Huánuco,38.9626,39.0,-0.037,True
+11,Ica,6.0141935,6.0,0.014,True
+12,Junín,18.499405,18.5,-0.001,True
+13,La Libertad,30.19031,30.2,-0.01,True
+14,Lambayeque,14.040639,14.0,0.041,True
+15,Lima,27.068943,27.1,-0.031,True
+16,Loreto,42.97258,43.0,-0.027,True
+17,Madre de Dios,11.147794,11.1,0.048,True
+18,Moquegua,10.968161,11.0,-0.032,True
+19,Pasco,38.971985,39.0,-0.028,True
+20,Piura,31.860998,31.9,-0.039,True
+21,Puno,39.93808,39.9,0.038,True
+22,San Martín,22.021475,22.0,0.021,True
+23,Tacna,23.989037,24.0,-0.011,True
+24,Tumbes,26.901173,26.9,0.001,True
+25,Ucayali,27.070066,27.1,-0.03,True
