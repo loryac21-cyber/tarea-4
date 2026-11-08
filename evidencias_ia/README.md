@@ -1,13 +1,9 @@
 # Evidencias del uso de inteligencia artificial
 
-Todo el proyecto se desarrolló con **Claude Code** (Anthropic) en VS Code. Hay dos tipos de evidencia:
-
-1. **La conversación de desarrollo** (Opción A, capturas): el diálogo con Claude Code en el que se construyeron el
-   servidor MCP, las skills, la integración, las pruebas, las correcciones y el informe. Va como documento Word / PDF
-   con capturas numeradas en orden cronológico: `conversacion_desarrollo.pdf` (pendiente de agregar).
-2. **Las ejecuciones del agente** (Opción B, exportación): cada vez que el agente trabajó con `claude -p`, los
-   scripts del proyecto guardaron la sesión completa en JSON (`.jsonl`, una línea por evento: cada mensaje, cada
-   llamada a una herramienta MCP o skill y su resultado) y una versión legible en Markdown (`.md`).
+Todo el proyecto se desarrolló con **Claude Code** (Anthropic) en VS Code. Las evidencias son las ejecuciones del
+agente (exportación de las sesiones): cada vez que el agente trabajó con `claude -p`, los scripts del proyecto
+guardaron la sesión completa en JSON (`.jsonl`, una línea por evento: cada mensaje, cada llamada a una herramienta MCP
+o skill y su resultado) y una versión legible en Markdown (`.md`).
 
 | Carpeta | Qué hay | Lo generó |
 |---|---|---|
@@ -24,5 +20,4 @@ los servidores MCP conectados y las skills disponibles; luego aparece cada «Lla
 
 **Datos sensibles.** Antes de publicar se buscaron correos, claves, tokens y contraseñas en todos los archivos de
 esta carpeta: no hay ninguno (`apiKeySource: none`; las únicas apariciones de «token» son contadores de uso del
-modelo). Las rutas muestran el usuario de Windows (`C:\Users\Lory\...`), que no es un dato sensible. Las capturas de
-la conversación de desarrollo se revisan con el mismo criterio antes de subirlas.
+modelo). Las rutas muestran el usuario de Windows (`C:\Users\Lory\...`), que no es un dato sensible.

@@ -219,8 +219,7 @@ fue de 6.01 % en Ica a 45.01 % en Cajamarca. Siete de estas cifras se comprobaro
 
 ## 12. Evidencias del uso de inteligencia artificial
 
-En [`evidencias_ia/`](evidencias_ia/): la conversación de desarrollo con Claude Code (capturas) y la transcripción
-completa de cada ejecución del agente (`.jsonl` + `.md`): integración, activación de skills y las 50 sesiones de la
+En [`evidencias_ia/`](evidencias_ia/): la transcripción completa de cada ejecución del agente (`.jsonl` + `.md`): integración, activación de skills y las 50 sesiones de la
 evaluación (20 principales, 20 de la variante con salidas previas y 10 del experimento sin «no sé»). Usé **Claude Code** para leer el enunciado y los materiales de las sesiones 04 y 16, escribir el servidor,
 las pruebas propias, las skills, los scripts del agente y de la evaluación, y para revisar los resultados. Revisé y
 verifiqué las cifras contra la web del BCRP, el informe del INEI y la referencia de la sesión 16.
