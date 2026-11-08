@@ -1,0 +1,47 @@
+[
+ {
+  "demo": "1_invocacion_directa",
+  "pedido": "/limpiando-enaho 2024",
+  "base_borrada_antes": false,
+  "esperado": "limpiando-enaho, llamada a mano con /",
+  "skills_en_orden": [],
+  "scripts_en_orden": [
+   "limpiar.py"
+  ],
+  "segundos": 17.6,
+  "error": "",
+  "respuesta": "La limpieza de la ENAHO 2024 terminó bien. Pasaron las 17 verificaciones, incluidas todas las esenciales, y `salidas/validacion.txt` dice `ESTADO: OK`.\n\n**Qué se generó**\n- `salidas/hogares_2024.parquet` tiene 33,691 hogares.\n- `salidas/personas_2024.parquet` tiene 108,664 personas residentes habituales.\n- `salidas/indicadores.csv` tiene 138 filas, una por indicador y grupo.\n- `salidas/validacion.txt` guarda el detalle de las verificaciones.\n\n**Controles principales**\n- El número de hogares y de filas del módulo 02 coincide con la referencia, y no hay llaves duplicadas.\n- La unión entre módulos no perdió ni duplicó personas.\n- Los 25 códigos territoriales están presentes.\n- El promedio simple de pobreza (25.61 %) no coincide con el ponderado (27.53 %), lo que confirma que se pondera.\n- La población expandida con `factor07 × mieperho` (34,482,700) difiere +0.98 % de la suma de `facpob07` (34,147,768). Esa verificación no es esencial y quedó aprobada.\n\n**Cifras nacionales** (INEI, ENAHO 2024, ponderado con `factor07 × mieperho`; la cifra de personas usa `facpob07`)\n\n| Indicador | Valor |\n|---|---|\n| Pobreza monetaria, hogares | 27.58 % |\n| Pobreza monetaria, personas | 27.53 % |\n| Pobreza extrema | 5.50 % |\n| Pobreza urbana | 24.81 % |\n| Pobreza rural | 39.30 % |\n| Pobreza en Lima Metropolitana | 28.21 % |\n\nLas bases ya están listas para `graficando-enaho` y `mapeando-enaho`. Si un grupo tiene menos de 300 casos en `n_muestral`, la estimación es poco precisa, y conviene advertirlo."
+ },
+ {
+  "demo": "2_lenguaje_natural_graficos",
+  "pedido": "Grafica la pobreza monetaria de la ENAHO 2024 por sexo y por grupo de edad, y dime las cifras de cada grupo.",
+  "base_borrada_antes": false,
+  "esperado": "graficando-enaho, activada por la descripción",
+  "skills_en_orden": [
+   "graficando-enaho"
+  ],
+  "scripts_en_orden": [
+   "graficar.py"
+  ],
+  "segundos": 27.0,
+  "error": "",
+  "respuesta": "Generé los dos gráficos y los dos se leen bien. Las cifras son estimaciones ponderadas con `facpob07` (personas residentes).\n\n**Por sexo** → `figuras/enaho_pobreza_sexo_2024.png` (tabla en el `.csv` del mismo nombre)\n\n| Sexo | Pobreza monetaria | Población expandida | n muestral |\n|---|---|---|---|\n| Mujer | 27.68 % | 17,694,762 | 56,077 |\n| Hombre | 27.37 % | 16,453,003 | 52,587 |\n\n**Por grupo de edad** → `figuras/enaho_pobreza_edad_2024.png` (tabla en el `.csv` del mismo nombre)\n\n| Edad | Pobreza monetaria | Población expandida | n muestral |\n|---|---|---|---|\n| 0-14 | 37.52 % | 7,941,994 | 26,489 |\n| 15-29 | 25.97 % | 7,512,400 | 23,122 |\n| 30-44 | 27.87 % | 6,689,119 | 20,648 |\n| 45-64 | 21.15 % | 7,803,731 | 24,735 |\n| 65 y más | 22.74 % | 4,200,522 | 13,670 |\n\nEl promedio nacional que marca el gráfico es 27.5 %.\n\n- **Sexo:** la diferencia entre mujeres y hombres es de 0.3 puntos. Con estas cifras no puedo decir si es estadísticamente distinta de cero, porque el script no calcula errores estándar ni intervalos de confianza.\n- **Edad:** los niños de 0 a 14 años tienen la tasa más alta, 37.5 %, unos 10 puntos sobre el promedio nacional. El grupo de 45 a 64 años tiene la más baja, 21.2 %.\n- Estos gráficos describen diferencias de un solo año, 2024. No explican por qué ocurren.\n\nFuente: INEI, ENAHO 2024 (módulos 34 y 02)."
+ },
+ {
+  "demo": "3_encadenamiento_mapa",
+  "pedido": "Haz un mapa de la pobreza monetaria por departamento con ENAHO 2024.",
+  "base_borrada_antes": true,
+  "esperado": "limpiando-enaho y después mapeando-enaho, porque falta la base procesada",
+  "skills_en_orden": [
+   "mapeando-enaho",
+   "limpiando-enaho"
+  ],
+  "scripts_en_orden": [
+   "limpiar.py",
+   "mapear.py"
+  ],
+  "segundos": 32.7,
+  "error": "",
+  "respuesta": "El mapa de pobreza monetaria por departamento con la ENAHO 2024 está listo: `mapas/pobreza_departamento_2024.png`.\n\nLa tabla de datos quedó en `mapas/pobreza_departamento_2024.csv`. Primero corrí `limpiando-enaho` porque faltaba `salidas/hogares_2024.parquet`. Su validación dio `ESTADO: OK` (17 de 17 verificaciones).\n\n- **Unión:** los 25 departamentos tienen dato. La unión fue por código (`ubigeo[:2]` con `FIRST_IDDP`, `validate='1:1'`), con Lima y Callao separados.\n- **Comparación con la referencia de la sesión 16:** coinciden los 25 de 25 departamentos (±0.1 pp). La diferencia máxima es 0.049 pp.\n- **Más pobreza:** Cajamarca, con 45.0 % de personas.\n- **Menos pobreza:** Ica, con 6.0 %.\n- **Siguientes en pobreza:** Loreto (43.0 %), Puno (39.9 %), Pasco (39.0 %) y Huánuco (39.0 %).\n- **Lima y Callao:** Lima tiene 27.1 % y Callao 33.9 %.\n- **Mapa:** usa una sola escala de color, de claro a oscuro desde 0, con la leyenda «% de personas». Revisé la imagen y la leyenda y la nota al pie se leen bien.\n\n**Fuente:** INEI, ENAHO 2024 (módulos 34 y 02), ponderada con factor07 × mieperho. Los límites son `peru_departamental_simple.geojson` del curso. Las cifras salen de `mapas/pobreza_departamento_2024.csv`."
+ }
+]

@@ -75,7 +75,7 @@ def herramientas_usadas(eventos):
             if nombre == "Skill":
                 usadas.append(f"Skill:{entrada.get('skill') or entrada.get('command') or entrada}")
             elif nombre in ("Bash", "PowerShell"):
-                usadas.append(f"{nombre}: {str(entrada.get('command', ''))[:120]}")
+                usadas.append(f"{nombre}: {str(entrada.get('command', ''))[:400]}")
             else:
                 usadas.append(nombre)
     return usadas
